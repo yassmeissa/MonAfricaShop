@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 
 export default function PaymentSuccess() {
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ export default function PaymentSuccess() {
         const total = parseFloat(localStorage.getItem('paypalTotal') || '0');
 
         // Capturer le paiement
-        const response = await fetch('http://localhost:5001/api/paypal/capture', {
+        const response = await fetch(`${API_URL}/api/paypal/capture`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ orderId, customer, items, total })

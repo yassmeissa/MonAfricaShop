@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { API_URL } from '../config/api';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       // Récupérer les commandes
-      const ordersRes = await fetch('http://localhost:5001/api/orders', {
+      const ordersRes = await fetch(`${API_URL}/api/orders`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -94,7 +95,7 @@ export default function AdminDashboard() {
       const paidOrders = ordersData.filter(o => o.status === 'paid').length;
 
       // Récupérer les produits
-      const productsRes = await fetch('http://localhost:5001/api/products');
+      const productsRes = await fetch(`${API_URL}/api/products`);
       let productsData = [];
       if (productsRes.ok) {
         productsData = await productsRes.json();
@@ -110,7 +111,7 @@ export default function AdminDashboard() {
       });
 
       // Récupérer les catégories
-      const categoriesRes = await fetch('http://localhost:5001/api/categories');
+      const categoriesRes = await fetch(`${API_URL}/api/categories`);
       if (categoriesRes.ok) {
         const categoriesData = await categoriesRes.json();
         setCategories(categoriesData);
@@ -145,7 +146,7 @@ export default function AdminDashboard() {
     const { orderId, newStatus } = confirmDialog;
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`http://localhost:5001/api/orders/${orderId}/status`, {
+      const response = await fetch(`${API_URL}/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -257,7 +258,7 @@ export default function AdminDashboard() {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/products', {
+      const response = await fetch(`${API_URL}/api/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -290,7 +291,7 @@ export default function AdminDashboard() {
   const handleDeleteProduct = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`http://localhost:5001/api/products/${productDialog.product._id}`, {
+      const response = await fetch(`${API_URL}/api/products/${productDialog.product._id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -317,7 +318,7 @@ export default function AdminDashboard() {
         imageUrl = editImagePreview;
       }
 
-      const response = await fetch(`http://localhost:5001/api/products/${productDialog.product._id}`, {
+      const response = await fetch(`${API_URL}/api/products/${productDialog.product._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

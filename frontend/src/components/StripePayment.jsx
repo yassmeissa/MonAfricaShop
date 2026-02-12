@@ -2,6 +2,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -30,7 +31,7 @@ function StripePaymentForm({ customer, items, total, onClose, navigate }) {
 
     try {
       // Étape 1: Créer une Payment Intent
-      const intentResponse = await fetch('http://localhost:5001/api/stripe/create-intent', {
+      const intentResponse = await fetch(`${API_URL}/api/stripe/create-intent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ total, email: customer.email })
@@ -71,7 +72,7 @@ function StripePaymentForm({ customer, items, total, onClose, navigate }) {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const confirmResponse = await fetch('http://localhost:5001/api/stripe/confirm', {
+      const confirmResponse = await fetch(`${API_URL}/api/stripe/confirm`, {
         method: 'POST',
         headers,
         body: JSON.stringify({

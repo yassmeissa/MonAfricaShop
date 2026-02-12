@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 
 export default function PayPalPayment({ customer, items, total, onClose }) {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,7 @@ export default function PayPalPayment({ customer, items, total, onClose }) {
 
     try {
       // Créer une commande PayPal
-      const createResponse = await fetch('http://localhost:5001/api/paypal/create-order', {
+      const createResponse = await fetch(`${API_URL}/api/paypal/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ customer, items, total })

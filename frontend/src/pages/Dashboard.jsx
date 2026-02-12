@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditProfileModal from '../components/EditProfileModal';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { API_URL } from '../config/api';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -29,7 +30,7 @@ export default function Dashboard() {
     try {
       const token = localStorage.getItem('token');
       
-      const response = await fetch('http://localhost:5001/api/orders/my', {
+      const response = await fetch(`${API_URL}/api/orders/my`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

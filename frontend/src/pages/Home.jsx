@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config/api';
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,7 +15,7 @@ export default function Home() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/categories');
+      const response = await axios.get(`${API_URL}/api/categories`);
       setCategories(response.data);
       setLoading(false);
     } catch (error) {

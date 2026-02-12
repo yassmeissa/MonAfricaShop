@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { API_URL } from '../config/api';
 
 export default function EditProfile() {
   const [user, setUser] = useState(null);
@@ -58,7 +59,7 @@ export default function EditProfile() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/users/update', {
+      const response = await fetch(`${API_URL}/api/users/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

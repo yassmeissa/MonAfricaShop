@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 
 export default function ApplePayGooglePay({ customer, items, total, onClose, paymentMethod }) {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,7 @@ export default function ApplePayGooglePay({ customer, items, total, onClose, pay
       const fakePaymentIntentId = 'pi_test_' + Math.random().toString(36).substring(7);
 
       // Créer la commande directement
-      const confirmResponse = await fetch('http://localhost:5001/api/stripe/confirm', {
+      const confirmResponse = await fetch(`${API_URL}/api/stripe/confirm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -50,7 +51,7 @@ export default function ApplePayGooglePay({ customer, items, total, onClose, pay
       const fakePaymentIntentId = 'pi_test_' + Math.random().toString(36).substring(7);
 
       // Créer la commande directement
-      const confirmResponse = await fetch('http://localhost:5001/api/stripe/confirm', {
+      const confirmResponse = await fetch(`${API_URL}/api/stripe/confirm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

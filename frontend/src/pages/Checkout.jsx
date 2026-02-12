@@ -4,6 +4,7 @@ import { getCart, clearCart } from '../utils/cart';
 import StripePayment from '../components/StripePayment';
 import AddressAutocomplete from '../components/AddressAutocomplete';
 import EditCheckoutModal from '../components/EditCheckoutModal';
+import { API_URL } from '../config/api';
 
 export default function Checkout() {
   const [cart, setCart] = useState([]);
@@ -101,7 +102,7 @@ export default function Checkout() {
       
       // Créer l'utilisateur avant le paiement
       try {
-        const response = await fetch('http://localhost:5001/api/users/register', {
+        const response = await fetch(`${API_URL}/api/users/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

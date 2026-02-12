@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { clearCart } from '../utils/cart';
+import { API_URL } from '../config/api';
 
 export default function OrderConfirmation() {
   const { orderId } = useParams();
@@ -12,7 +13,7 @@ export default function OrderConfirmation() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/orders/${orderId}`);
+        const response = await fetch(`${API_URL}/api/orders/${orderId}`);
         if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status} - ${response.statusText}`);
         }
