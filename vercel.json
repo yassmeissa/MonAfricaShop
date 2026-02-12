@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd frontend && npm run build",
+  "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/dist",
   "framework": "vite",
   "rewrites": [
@@ -7,5 +7,6 @@
       "source": "/api/:path*",
       "destination": "https://your-backend-url.vercel.app/api/:path*"
     }
-  ]
+  ],
+  "installCommand": "npm install"
 }
