@@ -7,7 +7,8 @@ export default function Footer() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/categories');
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+        const response = await fetch(`${apiUrl}/api/categories`);
         if (response.ok) {
           const data = await response.json();
           setCategories(data);
