@@ -1,0 +1,28 @@
+{
+  "name": "Africa Shop Backend",
+  "description": "African e-commerce platform backend",
+  "buildCommand": "cd backend && npm install",
+  "startCommand": "cd backend && npm start",
+  "env": {
+    "NODE_ENV": {
+      "description": "Node environment",
+      "value": "production"
+    },
+    "PORT": {
+      "description": "Server port",
+      "value": "5001"
+    },
+    "MONGO_URI": {
+      "description": "MongoDB connection string",
+      "required": true
+    },
+    "JWT_SECRET": {
+      "description": "JWT secret key",
+      "required": true
+    },
+    "FRONTEND_URL": {
+      "description": "Frontend URL from Vercel",
+      "required": true
+    }
+  }
+}
