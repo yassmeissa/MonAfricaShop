@@ -6,7 +6,20 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      if (window.innerWidth > 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     // Vérifier si l'utilisateur est connecté
@@ -60,17 +73,18 @@ export default function Navbar() {
   };
 
   const logoStyle = {
-    fontSize: '1.5rem',
+    fontSize: isMobile ? '1rem' : '1.5rem',
     fontWeight: '700',
     color: 'white',
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    gap: '8px'
+    gap: '8px',
+    whiteSpace: 'nowrap'
   };
 
   const desktopNavStyle = {
-    display: 'flex',
+    display: isMobile ? 'none' : 'flex',
     alignItems: 'center',
     gap: '32px'
   };
@@ -108,8 +122,8 @@ export default function Navbar() {
             color: 'transparent'
           }}>
             <div style={{
-              width: '40px',
-              height: '40px',
+              width: isMobile ? '32px' : '40px',
+              height: isMobile ? '32px' : '40px',
               borderRadius: '8px',
               background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
               display: 'flex',
@@ -117,12 +131,13 @@ export default function Navbar() {
               justifyContent: 'center',
               fontWeight: '800',
               color: '#1f2937',
-              fontSize: '1.3rem',
-              letterSpacing: '-1px'
+              fontSize: isMobile ? '1rem' : '1.3rem',
+              letterSpacing: '-1px',
+              flexShrink: 0
             }}>
               AS
             </div>
-            Africa Shop
+            {!isMobile && 'Africa Shop'}
           </Link>
 
           {/* Navigation Desktop */}
@@ -165,7 +180,8 @@ export default function Navbar() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#fbbf24'
+                color: '#fbbf24',
+                gap: isMobile ? '0' : '6px'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = '#fbbf24';
@@ -181,7 +197,7 @@ export default function Navbar() {
               }}
               title="Panier"
             >
-              <svg style={{ width: '20px', height: '20px', display: 'inline', marginTop: '2px', marginRight: '6px', stroke: 'currentColor' }} fill="none" viewBox="0 0 24 24">
+              <svg style={{ width: '20px', height: '20px', display: 'inline', marginTop: '2px', stroke: 'currentColor' }} fill="none" viewBox="0 0 24 24">
                 <circle cx="9" cy="21" r="1"></circle>
                 <circle cx="20" cy="21" r="1"></circle>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -262,7 +278,7 @@ export default function Navbar() {
               cursor: 'pointer',
               padding: '8px',
               borderRadius: '4px',
-              display: window.innerWidth <= 768 ? 'block' : 'none'
+              display: isMobile ? 'block' : 'none'
             }}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -279,13 +295,18 @@ export default function Navbar() {
         </div>
 
         {/* Menu Mobile */}
-        {isMenuOpen && (
+        {isMenuOpen && isMobile && (
           <div style={{ 
             backgroundColor: '#047857', 
             padding: '20px',
             borderRadius: '12px',
             marginTop: '10px',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            position: 'absolute',
+            top: '70px',
+            left: 0,
+            right: 0,
+            zIndex: 40
           }}>
             <Link 
               to="/" 
